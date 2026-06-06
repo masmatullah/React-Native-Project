@@ -1,0 +1,1267 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(debugShowCheckedModeBanner: false, home: FirstPage());
+  }
+}
+
+/* ===================== PAGE 1 ===================== */
+
+class FirstPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          children: [
+            SizedBox(height: 100),
+            ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Image.asset(
+                "assets/images/main.jpeg",
+                width: 360,
+                height: 390,
+                fit: BoxFit.cover,
+              ),
+            ),
+            SizedBox(height: 35),
+            Text(
+              "BODY LANGUAGE READER",
+              style: TextStyle(
+                fontSize: 30,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 15),
+            Text(
+              "--An advanced app to read and interpret emotions through body language analysis--\n",
+              style: TextStyle(fontSize: 14, color: Colors.white),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 40),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => SecondPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blueGrey,
+                padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: Text(
+                "Get Started",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+            Text(
+              "Develop by Black Virus",
+              style: TextStyle(color: Colors.white, fontSize: 8),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/* ===================== PAGE 2 (6 MAIN CARDS) ===================== */
+
+class SecondPage extends StatelessWidget {
+  final List<Map<String, String>> mainCards = [
+    {
+      "title": "Eyes",
+      "subtitle": "(gaze direction, eye contact)",
+      "image": "assets/images/eye.jpeg",
+      "color": "0xFF0D1B2A",
+    },
+    {
+      "title": "Hands",
+      "subtitle": "(handshakes, hand gestures)",
+      "image": "assets/images/hands.jpeg",
+      "color": "0xFF36454F",
+    },
+    {
+      "title": "Head",
+      "subtitle": "(shoulders, nose, mouth, ear)",
+      "image": "assets/images/head.jpeg",
+      "color": "0xFF1B1B1B",
+    },
+    {
+      "title": "Legs",
+      "subtitle": "(legs and feet positioning)",
+      "image": "assets/images/legs.jpeg",
+      "color": "0xFF464645",
+    },
+    {
+      "title": "Torso",
+      "subtitle": "(posture and orientation)",
+      "image": "assets/images/torso.jpeg",
+      "color": "0xFF3C4D57",
+    },
+    {
+      "title": "Accessories",
+      "subtitle": "Glass, Book, Phone, Pen",
+      "image": "assets/images/things.jpeg",
+      "color": "0xFF304656",
+    },
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        title: Text(
+          "Body Language Analysis",
+          style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+        ),
+      ),
+      body: ListView.builder(
+        padding: EdgeInsets.all(10),
+        itemCount: mainCards.length,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => SubCardPage(
+                    mainTitle: mainCards[index]["title"]!,
+                    mainIndex: index + 1,
+                  ),
+                ),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Container(
+                height: 180,
+                padding: EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: Color(int.parse(mainCards[index]["color"]!)),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: Image.asset(
+                        mainCards[index]["image"]!,
+                        width: 130,
+                        height: 120,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 30),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            mainCards[index]["title"]!,
+                            style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 10),
+                          Text(
+                            mainCards[index]["subtitle"]!,
+                            style: TextStyle(fontSize: 14, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Icon(
+                      Icons.arrow_forward_ios,
+                      color: Colors.grey[600],
+                      size: 20,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+/* ===================== PAGE 3 (8 SUB CARDS) ===================== */
+
+class SubCardPage extends StatelessWidget {
+  final String mainTitle;
+  final int mainIndex;
+
+  SubCardPage({required this.mainTitle, required this.mainIndex});
+
+  final Map<int, List<String>> subCardTitles = {
+    1: [
+      "Direct Eye Contact",
+      "Avoiding Eye Contact",
+      "Lateral Eye Movement",
+      "Rapid Blinking",
+      "Pupil Dilation",
+      "Squinting",
+      "Eye Rolling",
+      "Winking",
+    ],
+    2: [
+      "Open Palm Gesture",
+      "Closed Fist",
+      "Hands Behind Back",
+      "Finger Tapping",
+      "Steepling Fingers",
+      "Hand Over Mouth",
+      "Handshake Styles",
+      "Nail Biting",
+    ],
+    3: [
+      "Head Nodding",
+      "Head Shaking",
+      "Head Tilt",
+      "Chin Stroking",
+      "Jaw Clenching",
+      "Smiling Types",
+      "Frowning",
+      "Lip Biting",
+    ],
+    4: [
+      "Crossed Legs",
+      "Legs Apart",
+      "Foot Tapping",
+      "Ankle Locking",
+      "Leg Direction",
+      "Sitting Posture",
+      "Standing Posture",
+      "Weight Shifting",
+    ],
+    5: [
+      "Open Posture",
+      "Closed Posture",
+      "Leaning Forward",
+      "Leaning Back",
+      "Chest Puffing",
+      "Shoulder Shrug",
+      "Arm Crossing",
+      "Hands on Hips",
+    ],
+    6: [
+      "Glasses Adjustment",
+      "Phone Checking",
+      "Pen Twirling",
+      "Watch Checking",
+      "Bag Holding",
+      "Paper Fidgeting",
+      "Drinking Gestures",
+      "Accessory Playing",
+    ],
+  };
+
+  final Map<int, List<String>> subCardImages = {
+    1: [
+      "assets/images/eye.1.jpeg",
+      "assets/images/eye.2.jpeg",
+      "assets/images/eye.3.jpeg",
+      "assets/images/eye.4.jpeg",
+      "assets/images/eye.5.jpeg",
+      "assets/images/eye.7.jpeg",
+      "assets/images/eye.6.jpeg",
+      "assets/images/eye.8.jpeg",
+    ],
+    2: [
+      "assets/images/hand.1.jpeg",
+      "assets/images/hand.2.jpeg",
+      "assets/images/hand.3.jpeg",
+      "assets/images/hand.4.jpeg",
+      "assets/images/hand.5.jpeg",
+      "assets/images/hand.6.jpeg",
+      "assets/images/hand.7.jpeg",
+      "assets/images/hand.8.jpeg",
+    ],
+    3: [
+      "assets/images/head.1.jpeg",
+      "assets/images/head.2.jpeg",
+      "assets/images/head.3.jpeg",
+      "assets/images/head.4.jpeg",
+      "assets/images/head.5.jpeg",
+      "assets/images/head.6.jpeg",
+      "assets/images/head.7.jpeg",
+      "assets/images/head.8.jpeg",
+    ],
+    4: [
+      "assets/images/leg.1.jpeg",
+      "assets/images/leg.2.jpeg",
+      "assets/images/leg.3.jpeg",
+      "assets/images/leg.4.jpeg",
+      "assets/images/leg.5.jpeg",
+      "assets/images/leg.5.jpeg",
+      "assets/images/leg.7.jpeg",
+      "assets/images/leg.8.jpeg",
+    ],
+    5: [
+      "assets/images/torso.1.jpeg",
+      "assets/images/torso.2.jpeg",
+      "assets/images/torso.3.jpeg",
+      "assets/images/torso.4.jpeg",
+      "assets/images/torso.5.jpeg",
+      "assets/images/torso.6.jpeg",
+      "assets/images/torso.7.jpeg",
+      "assets/images/torso.8.jpeg",
+    ],
+    6: [
+      "assets/images/acc.1.jpeg",
+      "assets/images/acc.2.jpeg",
+      "assets/images/acc.3.jpeg",
+      "assets/images/acc.4.jpeg",
+      "assets/images/acc.5.jpeg",
+      "assets/images/acc.6.jpeg",
+      "assets/images/acc.7.jpeg",
+      "assets/images/acc.8.jpeg",
+    ],
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(
+          mainTitle,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 22,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+        elevation: 0,
+        centerTitle: true,
+      ),
+      body: GridView.builder(
+        padding: EdgeInsets.all(16),
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 16,
+          mainAxisSpacing: 16,
+          childAspectRatio: 0.75, // Better aspect ratio for image + text
+        ),
+        itemCount: 8,
+        itemBuilder: (context, index) {
+          return GestureDetector(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => DetailPage(
+                    mainCategory: mainTitle,
+                    mainIndex: mainIndex,
+                    subIndex: index + 1,
+                  ),
+                ),
+              );
+            },
+            child: Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              clipBehavior:
+                  Clip.antiAlias, // Ensures image respects rounded corners
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  // Image Section - Takes most of the card
+                  Expanded(
+                    flex: 5, // 75% of the card
+                    child: Container(
+                      color: Colors.grey[100],
+                      child: Image.asset(
+                        subCardImages[mainIndex]![index],
+                        fit: BoxFit.cover, // Image will cover the entire area
+                        width: double.infinity,
+                        height: double.infinity,
+                        errorBuilder: (context, error, stackTrace) {
+                          return Container(
+                            color: Colors.grey[200],
+                            child: Center(
+                              child: Icon(
+                                Icons.image_not_supported,
+                                size: 40,
+                                color: Colors.grey[500],
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+
+                  // Text Section - Fixed height
+                  Container(
+                    height: 80, // Fixed height for text area
+                    padding: EdgeInsets.symmetric(horizontal: 12, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 10, 34, 53),
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(12),
+                        bottomRight: Radius.circular(12),
+                      ),
+                    ),
+
+                    child: Column(
+                      children: [
+                        Text(
+                          subCardTitles[mainIndex]![index],
+                          style: TextStyle(
+                            fontSize: 15,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            height: 1.2,
+                          ),
+                          textAlign: TextAlign.center,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        SizedBox(height: 1),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "Tap to explore",
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.grey[200],
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                            SizedBox(width: 4),
+                            Icon(
+                              Icons.arrow_forward_ios,
+                              size: 10,
+                              color: Colors.grey[600],
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+/* ===================== PAGE 4 (DETAIL PAGE WITH COMPLETE 48 PAGES) ===================== */
+
+class DetailPage extends StatelessWidget {
+  final String mainCategory;
+  final int mainIndex;
+  final int subIndex;
+
+  DetailPage({
+    required this.mainCategory,
+    required this.mainIndex,
+    required this.subIndex,
+  });
+
+  // Detailed content for all 48 pages organized by main category and sub-index
+  final Map<int, Map<int, Map<String, dynamic>>> details = {
+    1: {
+      // Eyes Category
+      1: {
+        'title': 'Direct Eye Contact',
+        'image': 'assets/images/eye.1.jpeg',
+        'meaning': 'Shows confidence, honesty, and engagement',
+        'emotional_state': 'Confident, attentive, trustworthy',
+        'context': 'Common in conversations, negotiations, interviews',
+        'tips': 'Maintain 60-70% eye contact for optimal engagement',
+        'warning': 'Prolonged staring can be perceived as aggressive',
+        'confidence_level': 'High (90%)',
+        'cultural_variation':
+            'Considered respectful in Western cultures, may be rude in some Asian cultures',
+      },
+      2: {
+        'title': 'Avoiding Eye Contact',
+        'image': 'assets/images/eye.2.jpeg',
+        'meaning': 'Indicates discomfort, deception, or submission',
+        'emotional_state': 'Nervous, deceptive, shy, insecure',
+        'context': 'When lying, feeling ashamed, or being submissive',
+        'tips': 'Look at forehead or nose if direct contact is uncomfortable',
+        'warning': 'Constant avoidance suggests dishonesty or social anxiety',
+        'confidence_level': 'Low (40%)',
+        'cultural_variation': 'Normal in some cultures as sign of respect',
+      },
+      3: {
+        'title': 'Lateral Eye Movement',
+        'image': 'assets/images/eye.3.jpeg',
+        'meaning': 'Looking sideways shows suspicion, interest, or recall',
+        'emotional_state': 'Suspicious, thoughtful, remembering',
+        'context': 'When hearing unexpected information or thinking deeply',
+        'tips': 'Right movements may indicate lying, left movements recall',
+        'warning': 'Excessive movement appears shifty or nervous',
+        'confidence_level': 'Medium (75%)',
+        'cultural_variation': 'Universal across cultures',
+      },
+      4: {
+        'title': 'Rapid Blinking',
+        'image': 'assets/images/eye.4.jpeg',
+        'meaning': 'Sign of stress, anxiety, or cognitive load',
+        'emotional_state': 'Stressed, anxious, overwhelmed',
+        'context': 'During difficult questions or high-pressure situations',
+        'tips': 'Normal rate is 15-20 blinks/min, stress increases to 40-50',
+        'warning': 'Can indicate deception or physical discomfort',
+        'confidence_level': 'High (85%)',
+        'cultural_variation': 'Consistent across cultures',
+      },
+      5: {
+        'title': 'Pupil Dilation',
+        'image': 'assets/images/eye.5.jpeg',
+        'meaning': 'Shows interest, attraction, or cognitive processing',
+        'emotional_state': 'Interested, attracted, engaged',
+        'context': 'When seeing something pleasing or mentally stimulating',
+        'tips': 'Cannot be consciously controlled - very reliable indicator',
+        'warning': 'Also affected by light conditions',
+        'confidence_level': 'Very High (95%)',
+        'cultural_variation': 'Universal biological response',
+      },
+      6: {
+        'title': 'Squinting',
+        'image': 'assets/images/eye.6.jpeg',
+        'meaning': 'Indicates suspicion, concentration, or dislike',
+        'emotional_state': 'Suspicious, doubtful, concentrating',
+        'context': 'When hearing something questionable or focusing',
+        'tips': 'Often accompanied by furrowed brows',
+        'warning': 'Can also indicate vision problems or bright light',
+        'confidence_level': 'Medium (70%)',
+        'cultural_variation': 'Similar meaning worldwide',
+      },
+      7: {
+        'title': 'Eye Rolling',
+        'image': 'assets/images/eye.7.jpeg',
+        'meaning': 'Shows contempt, frustration, or disagreement',
+        'emotional_state': 'Disrespectful, annoyed, dismissive',
+        'context': 'When disagreeing or feeling superior',
+        'tips': 'Usually disrespectful in professional settings',
+        'warning': 'Often damages relationships and credibility',
+        'confidence_level': 'High (90%)',
+        'cultural_variation': 'Considered rude in most cultures',
+      },
+      8: {
+        'title': 'Winking',
+        'image': 'assets/images/eye.8.jpeg',
+        'meaning': 'Indicates shared secret, flirtation, or playfulness',
+        'emotional_state': 'Friendly, flirtatious, conspiratorial',
+        'context': 'Social settings, friendly conversations',
+        'tips': 'Use cautiously as meaning varies by relationship',
+        'warning': 'Can be misinterpreted in professional contexts',
+        'confidence_level': 'Medium (65%)',
+        'cultural_variation': 'Varies greatly by culture and context',
+      },
+    },
+    2: {
+      // Hands Category
+      1: {
+        'title': 'Open Palm Gesture',
+        'image': 'assets/images/hand.1.jpeg',
+        'meaning': 'Shows honesty, openness, and receptiveness',
+        'emotional_state': 'Trustworthy, accepting, transparent',
+        'context': 'When explaining, persuading, or being truthful',
+        'tips': 'Palm up = submission, Palm down = authority',
+        'warning': 'Overuse can seem manipulative',
+        'confidence_level': 'High (85%)',
+        'cultural_variation': 'Generally positive worldwide',
+      },
+      2: {
+        'title': 'Closed Fist',
+        'image': 'assets/images/hand.2.jpeg',
+        'meaning': 'Indicates determination, anger, or closed mindset',
+        'emotional_state': 'Angry, determined, resistant',
+        'context': 'During arguments, when frustrated, or showing resolve',
+        'tips': 'Clenched on table shows suppressed anger',
+        'warning': 'Often perceived as aggressive or uncooperative',
+        'confidence_level': 'High (88%)',
+        'cultural_variation': 'Universal sign of tension',
+      },
+      3: {
+        'title': 'Hands Behind Back',
+        'image': 'assets/images/hand.3.jpeg',
+        'meaning': 'Shows confidence, authority, or restraint',
+        'emotional_state': 'Confident, authoritative, controlled',
+        'context': 'Military, formal settings, observation',
+        'tips': 'Can indicate high status or formal authority',
+        'warning': 'May hide nervous fidgeting',
+        'confidence_level': 'Medium (75%)',
+        'cultural_variation': 'Common in formal Western settings',
+      },
+      4: {
+        'title': 'Finger Tapping',
+        'image': 'assets/images/hand.4.jpeg',
+        'meaning': 'Indicates impatience, boredom, or anxiety',
+        'emotional_state': 'Impatient, nervous, bored',
+        'context': 'Waiting, during boring meetings, when stressed',
+        'tips': 'Speed indicates level of impatience',
+        'warning': 'Can be distracting and appear rude',
+        'confidence_level': 'High (90%)',
+        'cultural_variation': 'Universal sign of impatience',
+      },
+      5: {
+        'title': 'Steepling Fingers',
+        'image': 'assets/images/hand.5.jpeg',
+        'meaning': 'Shows confidence, authority, and thinking',
+        'emotional_state': 'Confident, thoughtful, authoritative',
+        'context': 'Negotiations, decision making, teaching',
+        'tips': 'Higher steeple = more confidence',
+        'warning': 'Can appear arrogant if overdone',
+        'confidence_level': 'High (92%)',
+        'cultural_variation': 'Common in business worldwide',
+      },
+      6: {
+        'title': 'Hand Over Mouth',
+        'image': 'assets/images/hand.6.jpeg',
+        'meaning': 'Indicates suppression, surprise, or deception',
+        'emotional_state': 'Surprised, deceptive, holding back',
+        'context': 'When hearing shocking news or hiding reactions',
+        'tips': 'Often subconscious when lying',
+        'warning': 'Can indicate insecurity or dishonesty',
+        'confidence_level': 'Medium (78%)',
+        'cultural_variation': 'Similar meaning across cultures',
+      },
+      7: {
+        'title': 'Handshake Styles',
+        'image': 'assets/images/hand.7.jpeg',
+        'meaning': 'Reveals personality, confidence, and attitude',
+        'emotional_state': 'Confident, submissive, dominant',
+        'context': 'First meetings, business introductions',
+        'tips': 'Firm but not crushing, 2-3 pumps, eye contact',
+        'warning': 'Weak = insecurity, Crushing = dominance',
+        'confidence_level': 'High (87%)',
+        'cultural_variation': 'Varies greatly by culture',
+      },
+      8: {
+        'title': 'Nail Biting',
+        'image': 'assets/images/hand.8.jpeg',
+        'meaning': 'Shows anxiety, nervousness, or insecurity',
+        'emotional_state': 'Anxious, stressed, insecure',
+        'context': 'During stress, uncertainty, or concentration',
+        'tips': 'Often unconscious habit during tension',
+        'warning': 'Can damage professional image',
+        'confidence_level': 'High (89%)',
+        'cultural_variation': 'Universal nervous habit',
+      },
+    },
+    3: {
+      // Head Category
+      1: {
+        'title': 'Head Nodding',
+        'image': "assets/images/head.1.jpeg",
+        'meaning': 'Shows agreement, understanding, or encouragement',
+        'emotional_state': 'Agreeable, attentive, encouraging',
+        'context': 'Conversations, listening, teaching',
+        'tips': 'Slow nods = understanding, Fast nods = hurry up',
+        'warning': 'Excessive nodding can seem insincere',
+        'confidence_level': 'High (88%)',
+        'cultural_variation': 'Varies - in Bulgaria means "no"',
+      },
+      2: {
+        'title': 'Head Shaking',
+        'image': "assets/images/head.2.jpeg",
+        'meaning': 'Indicates disagreement, disbelief, or refusal',
+        'emotional_state': 'Disagreeing, disbelieving, rejecting',
+        'context': 'When denying, refusing, or expressing doubt',
+        'tips': 'Often accompanies verbal "no" or disagreement',
+        'warning': 'Can appear stubborn or closed-minded',
+        'confidence_level': 'High (90%)',
+        'cultural_variation': 'Universal for "no" in most cultures',
+      },
+      3: {
+        'title': 'Head Tilt',
+        'image': "assets/images/head.3.jpeg",
+        'meaning': 'Shows interest, curiosity, or submission',
+        'emotional_state': 'Interested, curious, attentive',
+        'context': 'When listening intently or showing empathy',
+        'tips': 'Exposes neck - shows vulnerability and trust',
+        'warning': 'Can appear flirtatious in certain contexts',
+        'confidence_level': 'Medium (80%)',
+        'cultural_variation': 'Generally positive across cultures',
+      },
+      4: {
+        'title': 'Chin Stroking',
+        'image': "assets/images/head.4.jpeg",
+        'meaning': 'Indicates deep thought, evaluation, or decision making',
+        'emotional_state': 'Thoughtful, evaluating, deciding',
+        'context': 'Problem solving, decision making, analysis',
+        'tips': 'Often used when making important decisions',
+        'warning': 'Can appear pretentious if overdone',
+        'confidence_level': 'High (85%)',
+        'cultural_variation': 'Common thinking gesture worldwide',
+      },
+      5: {
+        'title': 'Jaw Clenching',
+        'image': "assets/images/head.5.jpeg",
+        'meaning': 'Shows tension, anger, or stress',
+        'emotional_state': 'Angry, stressed, frustrated',
+        'context': 'During conflict, stress, or suppression',
+        'tips': 'Often indicates suppressed emotion',
+        'warning': 'Can lead to TMJ problems if chronic',
+        'confidence_level': 'High (92%)',
+        'cultural_variation': 'Universal stress indicator',
+      },
+      6: {
+        'title': 'Smiling Types',
+        'image': "assets/images/head.6.jpeg",
+        'meaning': 'Different smiles convey different emotions',
+        'emotional_state': 'Happy, polite, fake, genuine',
+        'context': 'Social interactions, greetings, reactions',
+        'tips': 'Genuine smile reaches eyes (crow\'s feet)',
+        'warning': 'Fake smiles don\'t involve eye muscles',
+        'confidence_level': 'High (94%)',
+        'cultural_variation': 'Smiling norms vary by culture',
+      },
+      7: {
+        'title': 'Frowning',
+        'image': "assets/images/head.7.jpeg",
+        'meaning': 'Shows disapproval, confusion, or concentration',
+        'emotional_state': 'Disapproving, confused, concentrating',
+        'context': 'When unhappy, thinking, or disapproving',
+        'tips': 'Forehead wrinkles indicate genuine concern',
+        'warning': 'Can appear unfriendly or angry',
+        'confidence_level': 'High (89%)',
+        'cultural_variation': 'Universal negative expression',
+      },
+      8: {
+        'title': 'Lip Biting',
+        'image': "assets/images/head.8.jpeg",
+        'meaning': 'Indicates anxiety, attraction, or hesitation',
+        'emotional_state': 'Anxious, attracted, hesitant',
+        'context': 'When nervous, flirting, or uncertain',
+        'tips': 'Often subconscious during stress or attraction',
+        'warning': 'Can damage lips and appear nervous',
+        'confidence_level': 'Medium (75%)',
+        'cultural_variation': 'Similar meanings worldwide',
+      },
+    },
+    4: {
+      // Legs Category
+      1: {
+        'title': 'Crossed Legs',
+        'image': "assets/images/leg.1.jpeg",
+        'meaning': 'Shows comfort, defensiveness, or formality',
+        'emotional_state': 'Comfortable, defensive, formal',
+        'context': 'Sitting positions, meetings, social settings',
+        'tips': 'Ankle over knee = confidence, Knee over knee = formal',
+        'warning': 'Can appear closed off or uninterested',
+        'confidence_level': 'Medium (78%)',
+        'cultural_variation': 'Considered informal in some cultures',
+      },
+      2: {
+        'title': 'Legs Apart',
+        'image': "assets/images/leg.2.jpeg",
+        'meaning': 'Indicates dominance, confidence, or territoriality',
+        'emotional_state': 'Confident, dominant, territorial',
+        'context': 'Asserting dominance, comfortable settings',
+        'tips': 'Common in confident individuals and leaders',
+        'warning': 'Can appear too casual or aggressive',
+        'confidence_level': 'High (85%)',
+        'cultural_variation': 'Gender norms affect perception',
+      },
+      3: {
+        'title': 'Foot Tapping',
+        'image': "assets/images/leg.3.jpeg",
+        'meaning': 'Shows impatience, anxiety, or excess energy',
+        'emotional_state': 'Impatient, anxious, energetic',
+        'context': 'Waiting, bored, nervous situations',
+        'tips': 'Speed correlates with anxiety level',
+        'warning': 'Can be distracting to others',
+        'confidence_level': 'High (90%)',
+        'cultural_variation': 'Universal sign of restlessness',
+      },
+      4: {
+        'title': 'Ankle Locking',
+        'image': "assets/images/leg.4.jpeg",
+        'meaning': 'Indicates anxiety, holding back, or insecurity',
+        'emotional_state': 'Anxious, insecure, withholding',
+        'context': 'Interviews, stressful situations, uncertainty',
+        'tips': 'Often subconscious during tension',
+        'warning': 'Strong indicator of negative emotions',
+        'confidence_level': 'High (88%)',
+        'cultural_variation': 'Universal anxiety indicator',
+      },
+      5: {
+        'title': 'Leg Direction',
+        'image': "assets/images/leg.5.jpeg",
+        'meaning': 'Feet point toward interest, away from dislike',
+        'emotional_state': 'Interested, attracted, wanting to leave',
+        'context': 'Social interactions, meetings, dates',
+        'tips': 'Feet point where mind wants to go',
+        'warning': 'Can reveal true feelings despite words',
+        'confidence_level': 'High (92%)',
+        'cultural_variation': 'Biological - not culturally learned',
+      },
+      6: {
+        'title': 'Sitting Posture',
+        'image': "assets/images/leg.6.jpeg",
+        'meaning': 'Reveals attitude, energy, and engagement',
+        'emotional_state': 'Engaged, bored, confident, submissive',
+        'context': 'Meetings, classrooms, social settings',
+        'tips': 'Forward lean = interest, Backward lean = detachment',
+        'warning': 'Slumping indicates low energy or depression',
+        'confidence_level': 'High (87%)',
+        'cultural_variation': 'Formality expectations vary',
+      },
+      7: {
+        'title': 'Standing Posture',
+        'image': "assets/images/leg.7.jpeg",
+        'meaning': 'Shows confidence, mood, and attitude',
+        'emotional_state': 'Confident, tired, defensive, open',
+        'context': 'Presentations, waiting, social interactions',
+        'tips': 'Weight balanced = confident, Weight shifting = nervous',
+        'warning': 'Poor posture affects perceived authority',
+        'confidence_level': 'High (89%)',
+        'cultural_variation': 'Military vs. casual varies by culture',
+      },
+      8: {
+        'title': 'Weight Shifting',
+        'image': "assets/images/leg.8.jpeg",
+        'meaning': 'Indicates nervousness, impatience, or discomfort',
+        'emotional_state': 'Nervous, impatient, uncomfortable',
+        'context': 'Waiting, public speaking, uncertain situations',
+        'tips': 'Constant shifting shows high anxiety',
+        'warning': 'Appears unconfident and unsettled',
+        'confidence_level': 'High (91%)',
+        'cultural_variation': 'Universal sign of discomfort',
+      },
+    },
+    5: {
+      // Torso Category
+      1: {
+        'title': 'Open Posture',
+        'image': "assets/images/torso.1.jpeg",
+        'meaning': 'Shows receptiveness, confidence, and friendliness',
+        'emotional_state': 'Open, confident, approachable',
+        'context': 'Welcoming, negotiations, social settings',
+        'tips': 'Arms uncrossed, chest exposed, facing person',
+        'warning': 'Can appear too casual in formal settings',
+        'confidence_level': 'High (90%)',
+        'cultural_variation': 'Preferred in Western business',
+      },
+      2: {
+        'title': 'Closed Posture',
+        'image': "assets/images/torso.2.jpeg",
+        'meaning': 'Indicates defensiveness, insecurity, or disagreement',
+        'emotional_state': 'Defensive, insecure, disagreeing',
+        'context': 'During conflict, when feeling threatened',
+        'tips': 'Arms crossed, body turned away, barriers created',
+        'warning': 'Appears unapproachable and resistant',
+        'confidence_level': 'High (93%)',
+        'cultural_variation': 'Universal protective gesture',
+      },
+      3: {
+        'title': 'Leaning Forward',
+        'image': "assets/images/torso.3.jpeg",
+        'meaning': 'Shows interest, engagement, or aggression',
+        'emotional_state': 'Interested, engaged, aggressive',
+        'context': 'Important conversations, listening intently',
+        'tips': 'Moderate lean = interest, Extreme lean = aggression',
+        'warning': 'Can invade personal space',
+        'confidence_level': 'High (88%)',
+        'cultural_variation': 'Space boundaries vary culturally',
+      },
+      4: {
+        'title': 'Leaning Back',
+        'image': "assets/images/torso.4.jpeg",
+        'meaning': 'Indicates relaxation, disinterest, or authority',
+        'emotional_state': 'Relaxed, disinterested, authoritative',
+        'context': 'Casual settings, when evaluating, showing dominance',
+        'tips': 'Often used by those in power',
+        'warning': 'Can appear arrogant or bored',
+        'confidence_level': 'Medium (82%)',
+        'cultural_variation': 'Authority display varies',
+      },
+      5: {
+        'title': 'Chest Puffing',
+        'image': "assets/images/torso.5.jpeg",
+        'meaning': 'Shows confidence, dominance, or aggression',
+        'emotional_state': 'Confident, dominant, aggressive',
+        'context': 'Asserting dominance, showing confidence',
+        'tips': 'Increases perceived size and authority',
+        'warning': 'Can appear threatening or arrogant',
+        'confidence_level': 'High (91%)',
+        'cultural_variation': 'Animalistic display - universal',
+      },
+      6: {
+        'title': 'Shoulder Shrug',
+        'image': "assets/images/torso.6.jpeg",
+        'meaning': 'Indicates uncertainty, ignorance, or submission',
+        'emotional_state': 'Uncertain, ignorant, submissive',
+        'context': 'When unsure, don\'t know, or surrendering',
+        'tips': 'Full shrug = complete uncertainty',
+        'warning': 'Appears unknowledgeable or indifferent',
+        'confidence_level': 'High (89%)',
+        'cultural_variation': 'Universal "I don\'t know" gesture',
+      },
+      7: {
+        'title': 'Arm Crossing',
+        'image': "assets/images/torso.7.jpeg",
+        'meaning': 'Shows defensiveness, discomfort, or self-protection',
+        'emotional_state': 'Defensive, uncomfortable, closed',
+        'context': 'When feeling threatened, cold, or disagreeing',
+        'tips': 'Tight crossing = strong resistance',
+        'warning': 'Creates barrier to communication',
+        'confidence_level': 'High (94%)',
+        'cultural_variation': 'Universal protective gesture',
+      },
+      8: {
+        'title': 'Hands on Hips',
+        'image': "assets/images/torso.8.jpeg",
+        'meaning': 'Indicates readiness, impatience, or authority',
+        'emotional_state': 'Ready, impatient, authoritative',
+        'context': 'Waiting, giving orders, showing determination',
+        'tips': 'Makes body appear larger and more dominant',
+        'warning': 'Can appear aggressive or confrontational',
+        'confidence_level': 'High (87%)',
+        'cultural_variation': 'Common authority pose worldwide',
+      },
+    },
+    6: {
+      // Accessories Category
+      1: {
+        'title': 'Glasses Adjustment',
+        'image': "assets/images/acc.1.jpeg",
+        'meaning': 'Indicates thinking, stalling, or uncertainty',
+        'emotional_state': 'Thoughtful, stalling, uncertain',
+        'context': 'When thinking, buying time, or considering',
+        'tips': 'Often used to create thinking pause',
+        'warning': 'Can appear manipulative if overused',
+        'confidence_level': 'Medium (76%)',
+        'cultural_variation': 'Similar meaning across cultures',
+      },
+      2: {
+        'title': 'Phone Checking',
+        'image': "assets/images/acc.2.jpeg",
+        'meaning': 'Shows disinterest, impatience, or distraction',
+        'emotional_state': 'Disinterested, impatient, distracted',
+        'context': 'Meetings, conversations, social settings',
+        'tips': 'Extremely rude in most social interactions',
+        'warning': 'Damages relationships and credibility',
+        'confidence_level': 'High (96%)',
+        'cultural_variation': 'Considered rude worldwide',
+      },
+      3: {
+        'title': 'Pen Twirling',
+        'image': "assets/images/acc.3.jpeg",
+        'meaning': 'Indicates boredom, nervousness, or thinking',
+        'emotional_state': 'Bored, nervous, thoughtful',
+        'context': 'Meetings, lectures, thinking situations',
+        'tips': 'Speed indicates level of restlessness',
+        'warning': 'Can be distracting to others',
+        'confidence_level': 'Medium (79%)',
+        'cultural_variation': 'Universal fidgeting behavior',
+      },
+      4: {
+        'title': 'Watch Checking',
+        'image': "assets/images/acc.4.jpeg",
+        'meaning': 'Shows impatience, time pressure, or boredom',
+        'emotional_state': 'Impatient, pressed for time, bored',
+        'context': 'Meetings, waiting, time-sensitive situations',
+        'tips': 'Repeated checking = strong desire to leave',
+        'warning': 'Signals disinterest to others',
+        'confidence_level': 'High (93%)',
+        'cultural_variation': 'Universal time-pressure signal',
+      },
+      5: {
+        'title': 'Bag Holding',
+        'image': "assets/images/acc.5.jpeg",
+        'meaning': 'Creates barrier, shows insecurity or protection',
+        'emotional_state': 'Insecure, protective, nervous',
+        'context': 'New situations, crowded places, uncertainty',
+        'tips': 'Held in front creates physical barrier',
+        'warning': 'Appears unconfident and closed off',
+        'confidence_level': 'High (88%)',
+        'cultural_variation': 'Universal protective behavior',
+      },
+      6: {
+        'title': 'Paper Fidgeting',
+        'image': "assets/images/acc.6.jpeg",
+        'meaning': 'Indicates nervousness, boredom, or impatience',
+        'emotional_state': 'Nervous, bored, impatient',
+        'context': 'Meetings, interviews, waiting periods',
+        'tips': 'Folding, tearing, or doodling shows anxiety',
+        'warning': 'Can appear disrespectful or unprofessional',
+        'confidence_level': 'High (90%)',
+        'cultural_variation': 'Universal anxiety display',
+      },
+      7: {
+        'title': 'Drinking Gestures',
+        'image': "assets/images/acc.7.jpeg",
+        'meaning': 'Shows nervousness, buying time, or social comfort',
+        'emotional_state': 'Nervous, stalling, socially comfortable',
+        'context': 'Social events, meetings, stressful situations',
+        'tips': 'Sipping during pauses = buying thinking time',
+        'warning': 'Excessive drinking can appear nervous',
+        'confidence_level': 'Medium (81%)',
+        'cultural_variation': 'Social drinking norms vary',
+      },
+      8: {
+        'title': 'Accessory Playing',
+        'image': "assets/images/acc.8.jpeg",
+        'meaning': 'Indicates nervousness, boredom, or self-soothing',
+        'emotional_state': 'Nervous, bored, self-soothing',
+        'context': 'Stressful situations, waiting, social anxiety',
+        'tips': 'Jewelry, clothing, hair touching common',
+        'warning': 'Can appear insecure or distracted',
+        'confidence_level': 'High (86%)',
+        'cultural_variation': 'Universal self-comfort behavior',
+      },
+    },
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final detail = details[mainIndex]![subIndex]!;
+
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(detail['title']),
+        backgroundColor: Colors.black,
+        foregroundColor: Colors.white,
+      ),
+      body: SingleChildScrollView(
+        padding: EdgeInsets.all(20),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image
+            Container(
+              height: 250,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                image: DecorationImage(
+                  image: AssetImage(detail['image']),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+
+            // Title
+            Text(
+              detail['title'],
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            SizedBox(height: 10),
+
+            // Main Category
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+              decoration: BoxDecoration(
+                color: Colors.amber.withOpacity(0.2),
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(color: Colors.amber),
+              ),
+              child: Text(
+                mainCategory.toUpperCase(),
+                style: TextStyle(
+                  color: Colors.amber,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            SizedBox(height: 25),
+
+            // Meaning Card
+            _buildInfoCard(
+              title: "Meaning",
+              content: detail['meaning'],
+              icon: Icons.psychology,
+              color: Colors.blue,
+            ),
+
+            // Emotional State Card
+            _buildInfoCard(
+              title: "Emotional State",
+              content: detail['emotional_state'],
+              icon: Icons.emoji_emotions,
+              color: Colors.green,
+            ),
+
+            // Context Card
+            _buildInfoCard(
+              title: "Common Context",
+              content: detail['context'],
+              icon: Icons.location_on,
+              color: Colors.purple,
+            ),
+
+            // Tips Card
+            _buildInfoCard(
+              title: "Interpretation Tips",
+              content: detail['tips'],
+              icon: Icons.lightbulb,
+              color: Colors.orange,
+            ),
+
+            // Warning Card
+            _buildInfoCard(
+              title: "Warning Signs",
+              content: detail['warning'],
+              icon: Icons.warning,
+              color: Colors.red,
+            ),
+
+            // Additional Info Row
+            Row(
+              children: [
+                Expanded(
+                  child: _buildSmallInfoCard(
+                    title: "Confidence Level",
+                    content: detail['confidence_level'],
+                    color: Colors.teal,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Expanded(
+                  child: _buildSmallInfoCard(
+                    title: "Cultural Variation",
+                    content: detail['cultural_variation'],
+                    color: Colors.indigo,
+                  ),
+                ),
+              ],
+            ),
+
+            SizedBox(height: 30),
+
+            // Back Button
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: () => Navigator.pop(context),
+                icon: Icon(Icons.arrow_back),
+                label: Text("Back to $mainCategory"),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.amber,
+                  foregroundColor: Colors.black,
+                  padding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+                ),
+              ),
+            ),
+            SizedBox(height: 20),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoCard({
+    required String title,
+    required String content,
+    required IconData icon,
+    required Color color,
+  }) {
+    return Card(
+      margin: EdgeInsets.only(bottom: 15),
+      color: Color.fromARGB(255, 50, 70, 80),
+      child: Padding(
+        padding: EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(icon, color: color),
+                SizedBox(width: 10),
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: color,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10),
+            Text(
+              content,
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.white.withOpacity(0.9),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSmallInfoCard({
+    required String title,
+    required String content,
+    required Color color,
+  }) {
+    return Card(
+      color: Color.fromARGB(255, 50, 70, 80),
+      child: Padding(
+        padding: EdgeInsets.all(12),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+                color: color,
+              ),
+            ),
+            SizedBox(height: 5),
+            Text(
+              content,
+              style: TextStyle(
+                fontSize: 13,
+                color: Colors.white.withOpacity(0.9),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
